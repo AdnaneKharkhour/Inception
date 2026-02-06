@@ -8,33 +8,40 @@ until mysql -h mariadb -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -e "SELECT 1" &> /de
 done
 echo "MariaDB is up"
 
-if [ ! -f /var/www/html/wp-config.php ]; then
+WP_PATH=/var/www/html
+
+if [ ! -f ${WP_PATH}/wp-config.php ]; then
     echo "Setting up WordPress"
-    wp core download --allow-root
+    # Ensure the volume has WordPress files
+    rm -f ${WP_PATH}/index.nginx-debian.html
+    wp core download --allow-root --path=${WP_PATH} --force
 
     wp config create \
         --dbname=${MYSQL_DATABASE} \
         --dbuser=${MYSQL_USER} \
         --dbpass=${MYSQL_PASSWORD} \
         --dbhost=mariadb:3306 \
-        --allow-root
+        --allow-root \
+        --path=${WP_PATH}
     wp core install \
         --url=${DOMAIN_NAME} \
         --title="inception" \
         --admin_user=${WP_ADMIN_USER} \
         --admin_password=${WP_ADMIN_PASSWORD} \
         --admin_email=${WP_ADMIN_EMAIL} \
-        --allow-root
+        --allow-root \
+        --path=${WP_PATH}
     wp user create ${WP_USER} \
         ${WP_USER_EMAIL} \
         --user_pass=${WP_USER_PASSWORD} \
         --role=author \
-        --allow-root
+        --allow-root \
+        --path=${WP_PATH}
     echo "WordPress setup completed"
 else
     echo "WordPress is already set up"
 fi
 
-chown -R www-data:www-data /var/www/html
+chown -R www-data:www-data ${WP_PATH}
 
 exec "$@"

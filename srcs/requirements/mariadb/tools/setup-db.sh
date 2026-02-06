@@ -5,8 +5,13 @@ set -e
 
 if [ ! -d "/var/lib/mysql" ]; then
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
-    
-    mysqld --user=mysql --bootstrap << EOF
+    echo "MariaDB setup completed."
+else
+    echo "MariaDB already initialized."
+fi
+
+# Ensure database and user grants exist even on restarts
+mysqld --user=mysql --bootstrap << EOF
 USE mysql;
 FLUSH PRIVILEGES;
 
@@ -24,11 +29,6 @@ GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 
 EOF
-
-    echo "MariaDB setup completed."
-else
-    echo "MariaDB already initialized."
-fi
 
 #Replace script with the original CMD (mysqld) 
 exec "$@"
