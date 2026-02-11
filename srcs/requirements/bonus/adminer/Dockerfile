@@ -1,22 +1,21 @@
 FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y \
-    php \
-    php-mysqli \
-    php-gd \
-    php-zip \
-    php-curl \
-    php-xml \
-    php-mbstring \
+    php7.4 \
+    php7.4-mysqli \
+    php7.4-gd \
+    php7.4-zip \
+    php7.4-curl \
+    php7.4-xml \
+    php7.4-mbstring \
     wget \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
 
-RUN wget -O adminer.zip https://www.adminer.org/latest.php && \
-    unzip adminer.zip && rm adminer.zip
+RUN wget -O adminer.php https://www.adminer.org/latest.php && \
+    chmod 644 adminer.php
 
 EXPOSE 8080
 
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+CMD ["php7.4", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
