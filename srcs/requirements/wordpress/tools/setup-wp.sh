@@ -12,7 +12,7 @@ WP_PATH=/var/www/html
 
 if [ ! -f ${WP_PATH}/wp-config.php ]; then
     echo "Setting up WordPress"
-    # Ensure the volume has WordPress files
+    
     rm -f ${WP_PATH}/index.nginx-debian.html
     wp core download --allow-root --path=${WP_PATH} --force
 
