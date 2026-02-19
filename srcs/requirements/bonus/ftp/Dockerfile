@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN mkdir -p /var/ftp
     
-COPY vsftpd.conf /etc/vsftpd.conf
+COPY conf/vsftpd.conf /etc/vsftpd.conf
 
 COPY tools/setup-ftp.sh /usr/local/bin/
 
