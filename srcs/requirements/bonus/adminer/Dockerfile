@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www/html
 
-RUN wget -O adminer.php https://www.adminer.org/latest.php && \
-    chmod 644 adminer.php
+RUN wget -O index.php https://www.adminer.org/latest.php && \
+    chmod 644 index.php
 
 EXPOSE 8080
 
