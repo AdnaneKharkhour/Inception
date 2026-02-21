@@ -58,8 +58,13 @@ services:
     ftp:
         container_name: ftp
         image: ftp
+        env_file: .env
         build:
             context: ./requirements/bonus/ftp
+        ports:
+            - "21:21"
+            - "20:20"
+            - "20000-20010:20000-20010"
         volumes:
           - wordpress_data:/var/www/html
         networks:
@@ -73,6 +78,17 @@ services:
             context: ./requirements/bonus/adminer
         ports:
           - "8080:8080"
+        networks:
+            - inception
+        restart: unless-stopped
+
+    website:
+        container_name: website
+        image: website
+        build:
+            context: ./requirements/bonus/website
+        ports:
+          - "8081:80"
         networks:
             - inception
         restart: unless-stopped
