@@ -1,0 +1,223 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #fff;
+}
+
+
+header {
+    width: 100%;
+    background: linear-gradient(90deg, #6a0dad 0%, #8b00ff 50%, #4b0082 100%);
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(138, 0, 230, 0.4);
+    border-bottom: 3px solid #8b00ff;
+}
+
+header h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(138, 0, 230, 0.8),
+                 0 0 40px rgba(138, 0, 230, 0.5);
+    letter-spacing: 3px;
+}
+
+header p {
+    font-size: 1.3rem;
+    color: #e0e0e0;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+.service-card {
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid #6a0dad;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(106, 13, 173, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: #8b00ff;
+    box-shadow: 0 15px 50px rgba(139, 0, 255, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(106, 13, 173, 0.1) 0%, rgba(139, 0, 255, 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #8b00ff;
+    text-shadow: 0 0 10px rgba(139, 0, 255, 0.5);
+    border-bottom: 2px solid #6a0dad;
+    padding-bottom: 0.5rem;
+}
+
+.service-card p {
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-size: 1rem;
+    color: #c0c0c0;
+    line-height: 1.6;
+    margin: 0;
+}
+
+
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+.badge.mandatory {
+    background: linear-gradient(90deg, #6a0dad 0%, #8b00ff 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+}
+
+.badge.bonus {
+    background: linear-gradient(90deg, #ff00ff 0%, #8b00ff 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4);
+}
+
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .services {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+    }
+} */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: white;
+    min-height: 100vh;
+}
+
+/* Header section */
+header {
+    width: 100%;
+    background-color: #6a0dad;
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 3px solid #8b00ff;
+}
+
+header h1 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 15px;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+}
+
+/* Services section */
+.services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 50px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Service cards */
+.service-card {
+    background-color: #16213e;
+    border: 2px solid #6a0dad;
+    border-radius: 10px;
+    padding: 30px;
+    transition: transform 0.7s;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    border-color: #8b00ff;
+    box-shadow: 0 10px 30px rgba(139, 0, 255, 0.5);
+}
+
+.service-card h1 {
+    font-size: 1.8rem;
+    color: #8b00ff;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #6a0dad;
+    padding-bottom: 10px;
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: #c0c0c0;
+    line-height: 1.6;
+}

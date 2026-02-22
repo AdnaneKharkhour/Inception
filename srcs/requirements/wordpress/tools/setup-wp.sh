@@ -4,7 +4,7 @@ set -e
 
 until mysql -h mariadb -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -e "SELECT 1" &> /dev/null; do
   echo "Waiting for MariaDB ..."
-  sleep 2
+  sleep 4
 done
 echo "MariaDB is up"
 
@@ -37,6 +37,9 @@ if [ ! -f ${WP_PATH}/wp-config.php ]; then
         --role=author \
         --allow-root \
         --path=${WP_PATH}
+    wp plugin install redis-cache --activate --allow-root
+    wp redis enable --allow-root
+    wp redis status
     echo "WordPress setup completed"
 else
     echo "WordPress is already set up"

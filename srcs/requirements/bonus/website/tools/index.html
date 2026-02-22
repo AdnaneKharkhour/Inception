@@ -3,9 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Inception</title>
 </head>
 <body>
-    <h1></h1>
+    <header>
+        <h1>Inception</h1>
+        <p>
+            Multi-container Docker infrastructure showcasing containerization, networking, and service orchestration.
+        </p>
+    </header>
+    <section class="services">
+        <div class="service-card">
+            <h1>Nginx</h1>
+            <p>
+                Reverse proxy and web server handling HTTPS connections on port 443. 
+                Configured with TLSv1.2/TLSv1.3 using self-signed SSL certificates. 
+                Serves WordPress via FastCGI connection to PHP-FPM, ensuring secure 
+                and efficient content delivery.
+            </p>
+        </div>
+        <div class="service-card">
+            <h1>Wordpress</h1>
+            <p>
+                Content Management System running on PHP-FPM 7.4 with WP-CLI for 
+                automated setup. Connected to MariaDB for data persistence and Redis 
+                for object caching. Includes an admin user and a standard user for 
+                complete functionality demonstration.
+            </p>
+        </div>
+        <div class="service-card">
+            <h1>Mariadb</h1>
+            <p>
+                Relational database management system storing WordPress data. 
+                Configured with persistent volumes for data retention across container 
+                restarts. Includes automated initialization script for database and 
+                user creation with secure password handling via environment variables.
+           </p>
+        </div>
+        <div class="service-card">
+            <h1>Redis</h1>
+            <p>
+                In-memory data structure store used as WordPress object cache. 
+                Compiled from source (version 7.2.4) for optimal performance. 
+                Significantly improves WordPress response times by caching database 
+                queries and reducing server load.
+            </p>
+        </div>
+        <div class="service-card">
+            <h1>Adminer</h1>
+            <p>
+                Lightweight database management tool providing web-based interface 
+                for MariaDB administration. Single-file PHP application running on 
+                port 8080, allowing easy database inspection, query execution, and 
+                schema management without command-line access.
+            </p>
+        </div>
+        <div class="service-card">
+            <h1>Ftp</h1>
+            <p>
+                vsftpd file transfer server providing secure access to WordPress files. 
+                Configured with passive mode (ports 20000-20010), chroot jail for security, 
+                and dedicated FTP user with write permissions to WordPress directory for 
+                easy file management and uploads.
+            </p>
+        </div>
+    </section>
 </body>
 </html>
