@@ -38,6 +38,9 @@ if [ ! -f ${WP_PATH}/wp-config.php ]; then
         --allow-root \
         --path=${WP_PATH}
     wp plugin install redis-cache --activate --allow-root
+    wp plugin activate redis-cache --allow-root
+    wp config set WP_REDIS_HOST redis --allow-root
+    wp config set WP_REDIS_PORT 6379 --raw --allow-root
     wp redis enable --allow-root
     wp redis status
     echo "WordPress setup completed"
