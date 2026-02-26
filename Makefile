@@ -10,7 +10,7 @@ up: make_dirs
 make_dirs:
 	mkdir -p ${DATA_PATH}/mariadb
 	mkdir -p ${DATA_PATH}/wordpress
-	mkdir -p ${DATA_PATH}/portainer
+	mkdir -p ${DATA_PATH}/grafana
 
 down:
 	docker-compose -f ${SRC} down
