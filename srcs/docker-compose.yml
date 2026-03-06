@@ -10,11 +10,6 @@ services:
         networks:
             - inception
         restart: unless-stopped
-        healthcheck:
-            test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
-            interval: 10s
-            timeout: 5s
-            retries: 5
     
     wordpress:
         container_name: wordpress
@@ -69,8 +64,6 @@ services:
         networks:
             - inception
         restart: unless-stopped
-        depends_on:
-            - wordpress
 
     adminer:
         container_name: adminer
@@ -108,8 +101,6 @@ services:
         networks:
             - inception
         restart: unless-stopped
-        depends_on:
-            - wordpress
 
 volumes:
     mariadb_data:
