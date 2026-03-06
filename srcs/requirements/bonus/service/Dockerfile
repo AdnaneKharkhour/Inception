@@ -1,19 +1,17 @@
 FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y \
-    wget \
-    adduser \
-    libfontconfig1 \
-    musl \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -o wget https://dl.grafana.com/grafana-enterprise/release/12.4.0/grafana-enterprise_12.4.0_22325204712_linux_amd64.deb && \
-    dpkg -i grafana-enterprise_12.4.0_22325204712_linux_amd64.deb && \
-    rm -f grafana-enterprise_12.4.0_22325204712_linux_amd64.deb
+RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
 
-WORKDIR /usr/share/grafana
+COPY tools/setup-fb.sh /usr/local/bin/
 
-EXPOSE 3000
+RUN chmod +x /usr/local/bin/setup-fb.sh
 
+EXPOSE 8082
 
-CMD ["grafana-server"]
+ENTRYPOINT [ "setup-fb.sh" ]
+
+CMD ["filebrowser", "--address", "0.0.0.0", "--port", "8082", "--root", "/srv"]

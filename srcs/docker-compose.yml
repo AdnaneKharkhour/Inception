@@ -92,30 +92,18 @@ services:
         networks:
             - inception
         restart: unless-stopped
-   
-    # portainer:
-    #     container_name: portainer
-    #     image: portainer
-    #     build:
-    #         context: ./requirements/bonus/service
-    #     ports:
-    #       - "9001:9001"
-    #     volumes:
-    #       - /var/run/docker.sock:/var/run/docker.sock
-    #       - portainer_data:/data
-    #     networks:
-    #         - inception
-    #     restart: unless-stopped
 
-    grafana:
-        container_name: grafana
-        image: grafana
+    filebrowser:
+        container_name: filebrowser
+        image: filebrowser
         build:
             context: ./requirements/bonus/service
+        env_file:
+            - .env
         ports:
-            - "3000:3000"
+            - "8082:8082"
         volumes:
-            - grafana_data:/var/lib/grafana
+            - wordpress_data:/srv
         networks:
             - inception
         restart: unless-stopped
@@ -136,14 +124,6 @@ volumes:
             type: none
             o: bind
             device: ${DATA_PATH}/wordpress
-
-    grafana_data:
-        name: grafana_data
-        driver: local
-        driver_opts:
-            type: none
-            o: bind
-            device: ${DATA_PATH}/grafana
 
 networks:
     inception:
