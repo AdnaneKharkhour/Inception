@@ -63,13 +63,14 @@ services:
             context: ./requirements/bonus/ftp
         ports:
             - "21:21"
-            - "20:20"
             - "20000-20010:20000-20010"
         volumes:
           - wordpress_data:/var/www/html
         networks:
             - inception
         restart: unless-stopped
+        depends_on:
+            - wordpress
 
     adminer:
         container_name: adminer
@@ -107,6 +108,8 @@ services:
         networks:
             - inception
         restart: unless-stopped
+        depends_on:
+            - wordpress
 
 volumes:
     mariadb_data:
