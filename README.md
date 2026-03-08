@@ -124,6 +124,183 @@ Other Makefile targets:
 
 The browser will warn about the self-signed TLS certificate on the HTTPS URLs -- that's expected.
 
+## Testing Services
+
+### WordPress
+
+Test HTTPS connection:
+
+```bash
+curl -k https://akharkho.42.fr
+```
+
+Test WordPress XML-RPC endpoint:
+
+```bash
+curl -k -X POST https://akharkho.42.fr/xmlrpc.php
+```
+
+Check WordPress installation status:
+
+```bash
+docker exec wordpress wp --allow-root --path=/var/www/html core is-installed && echo "WordPress is installed"
+```
+
+### MariaDB
+
+Connect directly to the database (password from `.env`):
+
+```bash
+docker exec -it mariadb mysql -u root -p
+```
+
+Once connected, run these SQL commands to verify:
+
+```sql
+SHOW DATABASES;
+USE wordpress;
+SHOW TABLES;
+SELECT user_login FROM wp_users;
+EXIT;
+```
+
+Quick command to list databases without interactive login:
+
+```bash
+docker exec mariadb mysql -u root -p<YOUR_ROOT_PASSWORD> -e "SHOW DATABASES;"
+```
+
+### Redis
+
+Connect to Redis CLI:
+
+```bash
+docker exec -it redis redis-cli
+```
+
+Test Redis is working:
+
+```redis
+PING
+# Should respond: PONG
+
+KEYS *
+# Shows cached WordPress data
+
+INFO stats
+# Shows Redis statistics
+
+EXIT
+```
+
+Test Redis connection from WordPress container:
+
+```bash
+docker exec wordpress redis-cli -h redis ping
+```
+
+### FTP Server
+
+Connect using command-line FTP client (credentials from `.env`):
+
+```bash
+ftp localhost 21
+# Enter FTP_USER and FTP_PASSWORD when prompted
+
+Test with `curl`:
+
+```bash
+curl -u <FTP_USER>:<FTP_PASSWORD> ftp://localhost:21/
+```
+
+### Adminer
+
+Access Adminer at `http://localhost:8080` and login with:
+
+- **System:** MySQL
+- **Server:** mariadb
+- **Username:** root (or your `MYSQL_USER`)
+- **Password:** from `.env`
+- **Database:** wordpress
+
+### FileBrowser
+
+Access FileBrowser at `http://localhost:8082` and login with credentials from `.env`:
+
+- **Username:** `FB_USER`
+- **Password:** `FB_PASSWORD`
+
+You should see the WordPress files directory.
+
+### Static Website
+
+Test the static website:
+
+```bash
+curl http://localhost:8081
+```
+
+### Container Health and Logs
+
+Check all running containers:
+
+```bash
+docker ps
+```
+
+Check container health status:
+
+```bash
+docker ps --format "table {{.Names}}\t{{.Status}}"
+```
+
+View logs for a specific service:
+
+```bash
+docker logs nginx
+docker logs wordpress
+docker logs mariadb
+docker logs redis
+docker logs ftp
+docker logs adminer
+docker logs website
+docker logs service
+```
+
+Follow logs in real-time:
+
+```bash
+docker logs -f wordpress
+```
+
+Inspect container details:
+
+```bash
+docker inspect wordpress
+```
+
+Check network connectivity between containers:
+
+```bash
+docker exec wordpress ping -c 3 mariadb
+docker exec wordpress ping -c 3 redis
+```
+
+Check volume mounts:
+
+```bash
+docker volume ls
+docker volume inspect wordpress_data
+docker volume inspect mariadb_data
+```
+
+Verify data persistence on host:
+
+```bash
+ls -la ~/data/wordpress
+ls -la ~/data/mariadb
+```
+
 ## Resources
 
 ### References
@@ -138,8 +315,6 @@ The browser will warn about the self-signed TLS certificate on the HTTPS URLs --
 
 AI was used in two areas:
 
-1. **Service configuration files** -- I used AI to help write and debug configuration files for NGINX, PHP-FPM, MariaDB, Redis, and vsftpd. These config files have a lot of directives and getting the syntax right from documentation alone would have taken much longer. I reviewed and tested every generated config to make sure it actually worked in the context of this project.
+1. **Service configuration files** -- I used AI to help write and debug configuration files for NGINX, PHP-FPM, MariaDB, and vsftpd. These config files have a lot of directives and getting the syntax right from documentation alone would have taken much longer. I reviewed and tested every generated config to make sure it actually worked in the context of this project.
 
-2. **Learning Docker concepts** -- I used AI as a learning tool to understand Docker networking, volume management, multi-stage builds, healthchecks, and how services interact inside a Compose setup. This supplemented the official Docker documentation and the video resources listed above.
-
-AI was not used to write the Dockerfiles or the shell setup scripts wholesale -- those were written incrementally while building and testing the containers.
+2. **Learning Docker concepts** -- I used AI as a learning tool to understand Docker networking, volume management, multi-stage builds, and how services interact inside a Compose setup. This supplemented the official Docker documentation and the video resources listed above.
