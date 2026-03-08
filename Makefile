@@ -1,5 +1,5 @@
 SRC = srcs/docker-compose.yml
-DATA_PATH = /home/${USER}/data
+DATA_PATH = /home/akharkho/data
 
 
 all: up
